@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
@@ -91,6 +91,7 @@ class _MilestonesCardState extends State<MilestonesCard> {
                           '${widget.mileDataModel.milDes}',
                           style: TextStyle(
                             fontSize: 11,
+                            letterSpacing: 1.4,
                           ),
                         ),
                       ),
@@ -107,7 +108,7 @@ class _MilestonesCardState extends State<MilestonesCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'Start Date: '),
                                 TextSpan(
-                                    text: widget.mileDataModel.startDate!.day.toString(),
+                                    text: '${widget.mileDataModel.startDate!.day.toString()}-''${widget.mileDataModel.startDate!.month.toString()}-''${widget.mileDataModel.startDate!.year.toString()}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),
@@ -118,7 +119,7 @@ class _MilestonesCardState extends State<MilestonesCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'End Date: '),
                                 TextSpan(
-                                    text: widget.mileDataModel.endDate!.day.toString(),
+                                    text: '${widget.mileDataModel.endDate!.day.toString()}-''${widget.mileDataModel.endDate!.month.toString()}-''${widget.mileDataModel.endDate!.year.toString()}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),

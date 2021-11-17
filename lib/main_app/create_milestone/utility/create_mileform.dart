@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/create_milestone/utility/my_miletextstylefield.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/milestones/main_milestones.dart';
 
 enum Gender { male, female }
+enum Status {in_progress , onHold , done}
 
 class MyCreateMileForm extends StatefulWidget {
   MyCreateMileForm({this.projectModel,Key? key}) : super(key: key);
@@ -219,11 +221,11 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                           prefixStyle: TextStyle(color: Colors.grey),
                           fillColor: Theme.of(context).scaffoldBackgroundColor),
                       value: _statusValue,
-                      items: <String>['IN PROGRESS', 'ON HOLD', 'DONE']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
+                      items: <Status>[Status.in_progress, Status.onHold, Status.done]
+                          .map<DropdownMenuItem<Enum>>((Enum value) {
+                        return DropdownMenuItem<Enum>(
                           value: value,
-                          child: Text(value),
+                          child: Text(value.toString()),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -355,10 +357,12 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         onPressed: () {
-                          if (_milestonesName.text.isEmpty ||
+                          if (_milestonesName.text.isEmpty
+                              ||
                               _description.text.isEmpty ||
                               _startDate == null ||
-                              _endDate == null) {
+                              _endDate == null
+                          ) {
                             var snackBar = SnackBar(
                                 content: Text('Please fill all forms...!'));
                             ScaffoldMessenger.of(context)
@@ -375,6 +379,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                               ));
                               Navigator.of(context).pop();
                             });
+                            MainMilestones.counter.value += 1;
                           }
                         },
                       ),

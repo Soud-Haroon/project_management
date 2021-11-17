@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project_management/main_app/main_Instalment/main_Instalments.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/main_project/utility/main_projectb_card.dart';
 import 'package:project_management/main_app/milestones/main_milestones.dart';
 
 import '../../../const_colors.dart';
@@ -33,7 +35,7 @@ class _MainProjectDetailsState extends State<MainProjectDetails> {
             color: MediaQuery.of(context).platformBrightness == Brightness.light
                 ? kContentColorLightTheme
                 : Colors.grey,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () { Navigator.of(context).pop(); MainProjectBCard.counter.value+=1;},
           ),
           title: Text(
             widget.myProjectData!.projectName.toString(),
@@ -56,7 +58,7 @@ class _MainProjectDetailsState extends State<MainProjectDetails> {
         body: TabBarView(children: [
           AboutProject(aboutProjectData: widget.myProjectData!),
           MainMilestones(mileProjectData: widget.myProjectData!),
-          Text('data3'),
+          MainInstalment(),
         ]),
       ),
     );

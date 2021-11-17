@@ -6,6 +6,7 @@ import '../../../const_colors.dart';
 
 class MainProjectBCard extends StatefulWidget {
   ProjectDetailModel projectDM = ProjectDetailModel();
+  static ValueNotifier<int> counter = ValueNotifier<int>(projectData.length);
 
   MainProjectBCard({Key? key, required this.projectDM}) : super(key: key);
 
@@ -86,6 +87,7 @@ class _MainProjectBCardState extends State<MainProjectBCard> {
                               widget.projectDM.description!,
                               style: TextStyle(
                                 fontSize: 11,
+                                letterSpacing: 1.4,
                               ),
                             ),
                           ),
@@ -105,8 +107,8 @@ class _MainProjectBCardState extends State<MainProjectBCard> {
                                         style: TextStyle(
                                             color: Color(0xffA880E3))),
                                     TextSpan(
-                                        text: '${widget.projectDM.startDate!.day}/' +
-                                            '${widget.projectDM.startDate!.month}/' +
+                                        text: '${widget.projectDM.startDate!.day}-'
+                                            '${widget.projectDM.startDate!.month}-'
                                             '${widget.projectDM.startDate!.year}'),
                                   ],
                                 ),
@@ -120,8 +122,8 @@ class _MainProjectBCardState extends State<MainProjectBCard> {
                                         style: TextStyle(
                                             color: Color(0xffFBBC00))),
                                     TextSpan(
-                                        text: '${widget.projectDM.endDate!.day}/' +
-                                            '${widget.projectDM.endDate!.month}/' +
+                                        text: '${widget.projectDM.endDate!.day}-'
+                                            '${widget.projectDM.endDate!.month}-'
                                             '${widget.projectDM.endDate!.year}'),
                                   ],
                                 ),
@@ -129,16 +131,20 @@ class _MainProjectBCardState extends State<MainProjectBCard> {
                             ]),
                       ),
                       // SizedBox(height: 30),
-                      RichText(
-                        text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: 'Milstones:   ',
-                                style: TextStyle(color: Color(0xffFF66B8))),
-                            // TextSpan(text: widget.milestones.toString()),
-                          ],
-                        ),
+                      ValueListenableBuilder(
+                      builder: (BuildContext context, int value, Widget? child) {
+                        return RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: widget.projectDM.milestone.length<=9 ? 'Milstones:  0${widget.projectDM.milestone.length} ' : 'Milstones:  ${widget.projectDM.milestone.length} ',
+                                  style: TextStyle(color: Color(0xffFF66B8))),
+                              // TextSpan(text: widget.milestones.toString()),
+                            ],
+                          ),
+                        );
+                      }, valueListenable: MainProjectBCard.counter,
                       ),
                     ]),
               ),

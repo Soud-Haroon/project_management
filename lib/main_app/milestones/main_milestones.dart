@@ -10,6 +10,7 @@ import 'utility/main_mil_card.dart';
 
 class MainMilestones extends StatefulWidget {
   MainMilestones({required this.mileProjectData, Key? key}) : super(key: key);
+  static ValueNotifier<int> counter = ValueNotifier<int>(projectData.length);
 
   ProjectDetailModel mileProjectData;
   @override
@@ -21,7 +22,9 @@ class _MainMilestonesState extends State<MainMilestones> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Padding(
+      body: ValueListenableBuilder(
+        builder: (BuildContext context, int value, Widget? child) {
+        return Padding(
         padding: const EdgeInsets.only(top: 10),
         child: widget.mileProjectData.milestone.isNotEmpty
             ? ListView.builder(
@@ -41,8 +44,10 @@ class _MainMilestonesState extends State<MainMilestones> {
                   );
                 })
             : Center(
-                child: Text('Click + to Create Milestone!'),
-              ),
+                child: Text('Click + to Create Milestone!')
+              ));
+      },
+    valueListenable: MainMilestones.counter,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {

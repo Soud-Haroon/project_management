@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/create_milestone/utility/my_miletextstylefield.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/total_tasks/main_task.dart';
 
 enum Gender { male, female }
 
@@ -369,6 +370,7 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                               widget.projectModel!.milestone[widget.index!].taskList.add(TaskModel(
                                 taskTitle: _taskName.text,
                               ));
+                              MainTotalTasks.counter.value += 1;
                               Navigator.of(context).pop();
                             });
                           }

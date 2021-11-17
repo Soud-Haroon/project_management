@@ -11,6 +11,7 @@ enum Gender { male, female }
 class MyCreateProjectForm extends StatefulWidget {
   const MyCreateProjectForm({Key? key}) : super(key: key);
 
+
   @override
   _MyCreateProjectFormState createState() => _MyCreateProjectFormState();
 }
@@ -417,7 +418,8 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                           onPressed: () {
                             // Navigator.of(context).push(MaterialPageRoute(
                             //     builder: (context) => NavBar(0)));
-                            if (_projectName.text.isEmpty ||
+                            if (_projectName.text.isEmpty
+                                ||
                                 _ownerName.text.isEmpty ||
                                 _companyName.text.isEmpty ||
                                 _area.text.isEmpty ||
@@ -428,7 +430,8 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                                 _startDate == null ||
                                 _endDate == null ||
                                 _dueDate == null ||
-                                _typeValue == null) {
+                                _typeValue == null
+                            ) {
                               var snackBar = SnackBar(
                                   content: Text('Please fill all forms...!'));
                               ScaffoldMessenger.of(context)

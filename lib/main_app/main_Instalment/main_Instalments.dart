@@ -30,12 +30,11 @@ class _MainInstalmentState extends State<MainInstalment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xffFAF7F2),
-      appBar: buildMyAppBar(context, 'Instalments', false, true),
+      // appBar: buildMyAppBar(context, 'Instalments', false, true),
       body: Column(
         children: [
-          const SizedBox(height: 60),
+          const SizedBox(height: 10),
           TotalHeader(totalSum: totalSum, totalRemaining: totalRemaining),
           const SizedBox(height: 5),
           // MainInstalmentCard(myIndex: 1, startDate: '01-02-2020', dueDateFine: 5,instalment: 40,)
