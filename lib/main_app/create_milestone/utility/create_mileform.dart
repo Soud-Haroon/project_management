@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_declarations, duplicate_ignore, prefer_typing_uninitialized_variables, prefer_const_constructors, unnecessary_new, prefer_final_fields, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_declarations, duplicate_ignore, prefer_typing_uninitialized_variables, prefer_const_constructors, unnecessary_new, prefer_final_fields, prefer_const_literals_to_create_immutables, must_be_immutable, unused_field
 
 import 'dart:io';
 
@@ -10,11 +10,14 @@ import 'package:project_management/main_app/main_project/Models/projectb_data.da
 import 'package:project_management/main_app/milestones/main_milestones.dart';
 
 enum Gender { male, female }
-enum Status {inprogress , onHold , done}
+enum Status { inprogress, onHold, done }
 
 class MyCreateMileForm extends StatefulWidget {
-  MyCreateMileForm({this.projectModel,Key? key}) : super(key: key);
+  MyCreateMileForm({this.projectModel, this.myIndex, this.edit, Key? key})
+      : super(key: key);
   ProjectDetailModel? projectModel;
+  int? myIndex;
+  bool? edit;
   @override
   _MyCreateMileFormState createState() => _MyCreateMileFormState();
 }
@@ -28,12 +31,11 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
   String? fileName;
   DateTime? _startDate;
   DateTime? _endDate;
+  var _dropDownStatusValue;
 //-------------------//
   XFile? image;
   String? imagePath;
-  List<String> _images = [
-    "",
-  ];
+  List<String> _images = [];
   bool? change;
 
   Future pickImage(bool add) async {
@@ -64,11 +66,25 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
     imagePath = null;
   }
 
-  var _statusValue;
-
   @override
   void initState() {
     super.initState();
+    if (widget.edit == true) {
+      _milestonesName.text =
+          widget.projectModel!.milestone[widget.myIndex!].mileName.toString();
+      _description.text =
+          widget.projectModel!.milestone[widget.myIndex!].milDes.toString();
+      _dropDownStatusValue =
+          widget.projectModel!.milestone[widget.myIndex!].statusValue;
+      _startDate = widget.projectModel!.milestone[widget.myIndex!].startDate;
+      _endDate = widget.projectModel!.milestone[widget.myIndex!].endDate;
+      _images = widget.projectModel!.milestone[widget.myIndex!].imageList!;
+    }
+
+    // if (widget.projectModel[widget.myIndex!].milestone[widget.myIndex!] != null) {
+    //   var mileUpdateDataPath =
+    //       widget.projectModel[widget.myIndex!].milestone[widget.myIndex!];
+    // }
   }
 
   @override
@@ -133,9 +149,12 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: widget.projectModel!.startDate!,
-                                        firstDate: widget.projectModel!.startDate!,
-                                        lastDate: widget.projectModel!.endDate!)
+                                            initialDate:
+                                                widget.projectModel!.startDate!,
+                                            firstDate:
+                                                widget.projectModel!.startDate!,
+                                            lastDate:
+                                                widget.projectModel!.endDate!)
                                         .then((value) {
                                       setState(() {
                                         _startDate = value;
@@ -173,8 +192,9 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                     showDatePicker(
                                             context: context,
                                             initialDate: _startDate!,
-                                        firstDate: _startDate!,
-                                        lastDate: widget.projectModel!.endDate!)
+                                            firstDate: _startDate!,
+                                            lastDate:
+                                                widget.projectModel!.endDate!)
                                         .then((value) {
                                       setState(() {
                                         _endDate = value;
@@ -220,7 +240,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                           ),
                           prefixStyle: TextStyle(color: Colors.grey),
                           fillColor: Theme.of(context).scaffoldBackgroundColor),
-                      value: _statusValue,
+                      value: _dropDownStatusValue,
                       items: Status.values
                           .map<DropdownMenuItem<Enum>>((Status value) {
                         return DropdownMenuItem<Status>(
@@ -230,7 +250,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          _statusValue = value;
+                          _dropDownStatusValue = value;
                         });
                       },
                     ),
@@ -251,12 +271,12 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                   ),
                   //-------------------------------------------------//
                   // if (imagePath == null) SizedBox(),
-                  if (_images.length > 1)
+                  if (_images.isNotEmpty)
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          for (int i = 1; i < _images.length; i++)
+                          for (int i = 0; i < _images.length; i++)
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: SizedBox(
@@ -348,7 +368,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                     child: SizedBox(
                       height: 60,
                       child: ElevatedButton(
-                        child: const Text('Create Milestones',
+                        child: Text(widget.edit == true ? 'Update Milestones': 'Create Milestones',
                             style:
                                 TextStyle(color: Colors.white)), //next button
                         style: ElevatedButton.styleFrom(
@@ -357,28 +377,46 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         onPressed: () {
-                          if (_milestonesName.text.isEmpty
-                              ||
+                          if (_milestonesName.text.isEmpty ||
                               _description.text.isEmpty ||
                               _startDate == null ||
-                              _endDate == null
-                          ) {
+                              _dropDownStatusValue == null ||
+                              _endDate == null) {
                             var snackBar = SnackBar(
                                 content: Text('Please fill all forms...!'));
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           } else {
-                            setState(() {
-                              widget.projectModel!.milestone.add(
-                                MileDataModel(
-                                mileName: _milestonesName.text,
-                                milDes: _description.text,
-                                startDate: _startDate!,
-                                endDate: _endDate!,
-                                imageList: _images,
-                              ));
+                            if (widget.edit == true) {
+                              setState(() {
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .mileName = _milestonesName.text;
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .milDes = _description.text;
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .startDate = _startDate;
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .endDate = _endDate;
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .statusValue = _dropDownStatusValue;
+                                widget.projectModel!.milestone[widget.myIndex!]
+                                    .imageList = _images;
+                              });
                               Navigator.of(context).pop();
-                            });
+                            } else {
+                              setState(() {
+                                widget.projectModel!.milestone
+                                    .add(MileDataModel(
+                                  mileName: _milestonesName.text,
+                                  milDes: _description.text,
+                                  startDate: _startDate!,
+                                  endDate: _endDate!,
+                                  statusValue: _dropDownStatusValue,
+                                  imageList: _images,
+                                ));
+                                Navigator.of(context).pop();
+                              });
+                            }
                             MainMilestones.counter.value += 1;
                           }
                         },

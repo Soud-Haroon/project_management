@@ -7,17 +7,19 @@ import 'package:project_management/main_app/main_project/Models/projectb_data.da
 import 'utility/create_mileform.dart';
 
 class MainCreateMilestones extends StatelessWidget {
-  MainCreateMilestones({this.model,Key? key}) : super(key: key);
-  
+  MainCreateMilestones({this.model, this.myIndex,this.edit, Key? key}) : super(key: key);
+
   ProjectDetailModel? model;
+  int? myIndex;
+  bool? edit;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: buildMyAppBar(context, 'Create Milestones', false, true),
+      appBar: buildMyAppBar(context, edit == true ? 'Update Milestones': 'Create Milestones', false, true),
       backgroundColor: Color(0xffE5E5E5),
-      body: MyCreateMileForm(projectModel: model),
+      body: MyCreateMileForm(projectModel: model, myIndex: myIndex, edit: edit,),
     );
   }
 }

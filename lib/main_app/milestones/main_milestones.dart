@@ -36,7 +36,7 @@ class _MainMilestonesState extends State<MainMilestones> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Milestone_of_Project(
                               milestoneData: widget.mileProjectData,
-                              index: index)));
+                              myIndex: index)));
                     },
                     child: MilestonesCard(
                       mileDataModel: widget.mileProjectData.milestone[index],
@@ -53,7 +53,7 @@ class _MainMilestonesState extends State<MainMilestones> {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) =>
-                    MainCreateMilestones(model: widget.mileProjectData)));
+                    MainCreateMilestones(model: widget.mileProjectData, edit: false,)));
           },
           child: Icon(
             Icons.add,

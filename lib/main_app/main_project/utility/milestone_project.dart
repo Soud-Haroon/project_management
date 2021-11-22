@@ -1,25 +1,29 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unnecessary_string_interpolations, camel_case_types
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
+import 'package:project_management/main_app/create_milestone/mian_createmile.dart';
+import 'package:project_management/main_app/create_milestone/utility/create_mileform.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
-
+import 'dart:math' as math;
 import '../../../const_colors.dart';
 
 class Milestone_of_Project extends StatelessWidget {
-  Milestone_of_Project({this.milestoneData, this.index, Key? key})
+  Milestone_of_Project({this.milestoneData, this.myIndex, Key? key})
       : super(key: key);
 
   ProjectDetailModel? milestoneData;
-  int? index;
+  int? myIndex;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildMyAppBar(
           context,
-          '${milestoneData!.milestone[index!].mileName.toString()}',
+          '${milestoneData!.milestone[myIndex!].mileName.toString()}',
           false,
           true),
       body: SingleChildScrollView(
@@ -29,11 +33,24 @@ class Milestone_of_Project extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //=====================================//
-              Text(milestoneData!.milestone[index!].mileName.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      ?.copyWith(color: Color(0xff3C3C3C))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(milestoneData!.milestone[myIndex!].mileName.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          ?.copyWith(color: Color(0xff3C3C3C))),
+                  //--------------------------------------------//
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MainCreateMilestones(model: milestoneData,myIndex: myIndex,edit: true)));
+                    },
+                    icon: Icon(Icons.edit_outlined, color: kPrimaryOrange),
+                  ),
+                ],
+              ),
               //===================================//
               Padding(
                 padding: const EdgeInsets.only(top: 15),
@@ -48,12 +65,26 @@ class Milestone_of_Project extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child: milestoneData!.milestone[index!].taskList.length.toString() == '0' ?Text("Tasks: (0${milestoneData!.milestone[index!].taskList.length})") : milestoneData!.milestone[index!].taskList.length <=9 ? Text("Tasks: (0${milestoneData!.milestone[index!].taskList.length })") : Text("Tasks: (${milestoneData!.milestone[index!].taskList.length })"),
+                          child: milestoneData!
+                                      .milestone[myIndex!].taskList.length
+                                      .toString() ==
+                                  '0'
+                              ? Text(
+                                  "Tasks: (0${milestoneData!.milestone[myIndex!].taskList.length})")
+                              : milestoneData!.milestone[myIndex!].taskList
+                                          .length <=
+                                      9
+                                  ? Text(
+                                      "Tasks: (0${milestoneData!.milestone[myIndex!].taskList.length})")
+                                  : Text(
+                                      "Tasks: (${milestoneData!.milestone[myIndex!].taskList.length})"),
                         ),
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MainTotalTasks(projectDetailModel: milestoneData,index: index)));
+                                builder: (context) => MainTotalTasks(
+                                    projectDetailModel: milestoneData,
+                                    index: myIndex)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(6.0),
@@ -73,18 +104,46 @@ class Milestone_of_Project extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (milestoneData!.milestone[index!].mileName!.isNotEmpty)
+                    if (milestoneData!.milestone[myIndex!].mileName!.isNotEmpty)
                       Text('Status:'),
                     Container(
                         height: 27,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: kInProgressColor,
+                          color: milestoneData!.milestone[myIndex!].statusValue
+                                      .toString() ==
+                                  'Status.inprogress'
+                              ? kInProgressColor
+                              : milestoneData!.milestone[myIndex!].statusValue
+                                          .toString() ==
+                                      'Status.onHold'
+                                  ? Colors.orange[300]
+                                  : milestoneData!
+                                              .milestone[myIndex!].statusValue
+                                              .toString() ==
+                                          'Status.done'
+                                      ? Colors.green[200]
+                                      : null,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
-                          child: Text('IN PROGRESS',
+                          child: Text(
+                              milestoneData!.milestone[myIndex!].statusValue
+                                          .toString() ==
+                                      'Status.inprogress'
+                                  ? 'IN PROGRESS'
+                                  : milestoneData!
+                                              .milestone[myIndex!].statusValue
+                                              .toString() ==
+                                          'Status.onHold'
+                                      ? 'ON HOLD'
+                                      : milestoneData!.milestone[myIndex!]
+                                                  .statusValue
+                                                  .toString() ==
+                                              'Status.done'
+                                          ? 'DONE'
+                                          : 'null',
                               style:
                                   TextStyle(fontSize: 11, color: Colors.white)),
                         )),
@@ -129,9 +188,9 @@ class Milestone_of_Project extends StatelessWidget {
                                     color: Colors.grey[600],
                                     fontSize: 11)),
                             TextSpan(
-                                text: '${milestoneData!.milestone[index!].startDate!.day.toString()}-' +
-                                    '${milestoneData!.milestone[index!].startDate!.month.toString()}-' +
-                                    '${milestoneData!.milestone[index!].startDate!.year.toString()}',
+                                text: '${milestoneData!.milestone[myIndex!].startDate!.day.toString()}-' +
+                                    '${milestoneData!.milestone[myIndex!].startDate!.month.toString()}-' +
+                                    '${milestoneData!.milestone[myIndex!].startDate!.year.toString()}',
                                 style: TextStyle(
                                     decoration: TextDecoration.none,
                                     color: Colors.grey[600],
@@ -151,9 +210,9 @@ class Milestone_of_Project extends StatelessWidget {
                                     color: Colors.grey[500],
                                     fontSize: 11)),
                             TextSpan(
-                                text: '${milestoneData!.milestone[index!].endDate!.day.toString()}-' +
-                                    '${milestoneData!.milestone[index!].endDate!.month.toString()}-' +
-                                    '${milestoneData!.milestone[index!].endDate!.year.toString()}',
+                                text: '${milestoneData!.milestone[myIndex!].endDate!.day.toString()}-' +
+                                    '${milestoneData!.milestone[myIndex!].endDate!.month.toString()}-' +
+                                    '${milestoneData!.milestone[myIndex!].endDate!.year.toString()}',
                                 style: TextStyle(
                                     decoration: TextDecoration.none,
                                     color: Colors.grey[500],
@@ -163,12 +222,6 @@ class Milestone_of_Project extends StatelessWidget {
                       ),
                     ]),
               ),
-              //=========================================//
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Divider(color: Colors.grey[400]),
-              ),
-
               //=========================================//
               Padding(
                 padding: const EdgeInsets.only(top: 5),
@@ -186,9 +239,66 @@ class Milestone_of_Project extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: Text(milestoneData!.milestone[index!].milDes.toString(),
+                child: Text(
+                    milestoneData!.milestone[myIndex!].milDes.toString(),
                     style: TextStyle(color: Colors.grey[500])),
               ),
+              //=====================================================//
+              if (milestoneData!.milestone[myIndex!].imageList!.isNotEmpty)
+                Column(
+                  children: [
+                    Row(children: [
+                      Transform.rotate(
+                          angle: -math.pi / 2 + 15,
+                          // angle: 60 * math.pi / 60,
+                          child: Icon(Icons.attach_file, color: Colors.grey)),
+                      SizedBox(width: 10),
+                      Text('Attachments', style: TextStyle(fontSize: 15)),
+                      SizedBox(width: 10),
+                      Container(
+                        height: 25,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Colors.black,
+                        ),
+                        child: Center(
+                            child: Text(
+                                milestoneData!
+                                    .milestone[myIndex!].imageList!.length
+                                    .toString(),
+                                style: TextStyle(color: Colors.white))),
+                      ),
+                    ]),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: milestoneData!
+                              .milestone[myIndex!].imageList!.length,
+                          itemBuilder: (context, index) {
+                            return SizedBox(
+                              height: 50,
+                              width: 70,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Image(
+                                  image: FileImage(File(milestoneData!
+                                      .milestone[myIndex!].imageList![index])),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                    //-------------------------------------------------//
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Divider(color: Colors.grey[400]),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),

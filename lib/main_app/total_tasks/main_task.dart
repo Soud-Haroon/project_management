@@ -25,7 +25,8 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
       appBar: buildMyAppBar(context, 'Total Tasks', true, true),
       body: ValueListenableBuilder(
         builder: (BuildContext context, int value, Widget? child) {
-        return ListView.builder(
+        return widget.projectDetailModel!.milestone[widget.index!].taskList.isNotEmpty ?
+        ListView.builder(
             itemCount: widget.projectDetailModel!.milestone[widget.index!].taskList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
@@ -36,7 +37,10 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
                   projectDetailModel: widget.projectDetailModel, index: widget.index,builderIndex: index,
                 ),
               );
-            });
+            }) :
+            Center(
+                child: Text('Click + to Create Task!')
+              );
         }, valueListenable: MainTotalTasks.counter,
       ),
       //=======================================//

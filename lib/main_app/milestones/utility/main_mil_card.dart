@@ -21,6 +21,7 @@ class MilestonesCard extends StatefulWidget {
 class _MilestonesCardState extends State<MilestonesCard> {
   @override
   Widget build(BuildContext context) {
+    print(widget.mileDataModel.statusValue);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Container(
@@ -61,22 +62,49 @@ class _MilestonesCardState extends State<MilestonesCard> {
                                 fontSize: 17,
                               ),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: Container(
-                                height: 27,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: kInProgressColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  child: Text('IN PROGRESS',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.white)),
-                                )),
-                          ),
+                          if (widget.mileDataModel.statusValue != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Container(
+                                  height: 27,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: widget.mileDataModel.statusValue
+                                                .toString() ==
+                                            'Status.inprogress'
+                                        ? kInProgressColor
+                                        : widget.mileDataModel.statusValue
+                                                    .toString() ==
+                                                'Status.onHold'
+                                            ? Colors.orange[300]
+                                            : widget.mileDataModel.statusValue
+                                                        .toString() ==
+                                                    'Status.done'
+                                                ? Colors.green[200]
+                                                : null,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    child: Text(
+                                        widget.mileDataModel.statusValue
+                                                    .toString() ==
+                                                'Status.inprogress'
+                                            ? 'IN PROGRESS'
+                                            : widget.mileDataModel.statusValue
+                                                        .toString() ==
+                                                    'Status.onHold'
+                                                ? 'ON HOLD'
+                                                : widget.mileDataModel
+                                                            .statusValue
+                                                            .toString() ==
+                                                        'Status.done'
+                                                    ? 'DONE'
+                                                    : 'null',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.white)),
+                                  )),
+                            ),
                         ],
                       ),
                     ],
@@ -108,7 +136,10 @@ class _MilestonesCardState extends State<MilestonesCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'Start Date: '),
                                 TextSpan(
-                                    text: '${widget.mileDataModel.startDate!.day.toString()}-''${widget.mileDataModel.startDate!.month.toString()}-''${widget.mileDataModel.startDate!.year.toString()}',
+                                    text:
+                                        '${widget.mileDataModel.startDate!.day.toString()}-'
+                                        '${widget.mileDataModel.startDate!.month.toString()}-'
+                                        '${widget.mileDataModel.startDate!.year.toString()}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),
@@ -119,7 +150,10 @@ class _MilestonesCardState extends State<MilestonesCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'End Date: '),
                                 TextSpan(
-                                    text: '${widget.mileDataModel.endDate!.day.toString()}-''${widget.mileDataModel.endDate!.month.toString()}-''${widget.mileDataModel.endDate!.year.toString()}',
+                                    text:
+                                        '${widget.mileDataModel.endDate!.day.toString()}-'
+                                        '${widget.mileDataModel.endDate!.month.toString()}-'
+                                        '${widget.mileDataModel.endDate!.year.toString()}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),

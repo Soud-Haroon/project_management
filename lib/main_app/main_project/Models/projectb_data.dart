@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 // List<MainProjectBCard> projectBData = [
 //   MainProjectBCard(
@@ -56,6 +56,7 @@ class MileDataModel {
   String? milDes;
   DateTime? startDate;
   DateTime? endDate;
+  var statusValue;
   List<String>? imageList;
   List<TaskModel> taskList = [];
 
@@ -65,6 +66,7 @@ class MileDataModel {
     this.startDate,
     this.endDate,
     this.imageList,
+    this.statusValue,
   });
 }
 
