@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
 import 'package:project_management/main_app/create_task/task_mil.dart';
-import 'package:project_management/main_app/home/main_home.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/total_tasks/task_about/task_about.dart';
 
@@ -34,7 +33,7 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainTaskAbout()));
                 },
                 child: TotalTaskCard(
-                  taskModel: widget.projectDetailModel, index: widget.index,
+                  projectDetailModel: widget.projectDetailModel, index: widget.index,builderIndex: index,
                 ),
               );
             });

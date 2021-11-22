@@ -48,7 +48,7 @@ class Milestone_of_Project extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
-                          child: milestoneData!.milestone.length <=9 ? Text("Tasks: (0${milestoneData!.milestone.length + 1})") : Text("Tasks: (${milestoneData!.milestone.length +1})"),
+                          child: milestoneData!.milestone[index!].taskList.length.toString() == '0' ?Text("Tasks: (0${milestoneData!.milestone[index!].taskList.length})") : milestoneData!.milestone[index!].taskList.length <=9 ? Text("Tasks: (0${milestoneData!.milestone[index!].taskList.length })") : Text("Tasks: (${milestoneData!.milestone[index!].taskList.length })"),
                         ),
                         InkWell(
                           onTap: () {

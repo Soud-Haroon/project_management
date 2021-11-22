@@ -9,7 +9,8 @@ import 'package:project_management/main_app/create_milestone/utility/my_miletext
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
 
-enum Gender { male, female }
+enum _Gender { male, female }
+enum _Status {inprogress , onHold , done}
 
 class MyCreateTaskForm extends StatefulWidget {
   MyCreateTaskForm({this.projectModel,this.index ,Key? key}) : super(key: key);
@@ -133,9 +134,9 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: widget.projectModel!.milestone[widget.index!].startDate!,
+                                        firstDate: widget.projectModel!.milestone[widget.index!].startDate!,
+                                        lastDate: widget.projectModel!.milestone[widget.index!].endDate!)
                                         .then((value) {
                                       setState(() {
                                         _startDate = value;
@@ -172,9 +173,9 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: _startDate!,
+                                        firstDate: _startDate!,
+                                        lastDate: widget.projectModel!.milestone[widget.index!].endDate!)
                                         .then((value) {
                                       setState(() {
                                         _endDate = value;
@@ -369,6 +370,8 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                             setState(() {
                               widget.projectModel!.milestone[widget.index!].taskList.add(TaskModel(
                                 taskTitle: _taskName.text,
+                                startDate: _startDate,
+                                endDate: _endDate,
                               ));
                               MainTotalTasks.counter.value += 1;
                               Navigator.of(context).pop();

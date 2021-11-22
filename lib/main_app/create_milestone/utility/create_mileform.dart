@@ -10,7 +10,7 @@ import 'package:project_management/main_app/main_project/Models/projectb_data.da
 import 'package:project_management/main_app/milestones/main_milestones.dart';
 
 enum Gender { male, female }
-enum Status {in_progress , onHold , done}
+enum Status {inprogress , onHold , done}
 
 class MyCreateMileForm extends StatefulWidget {
   MyCreateMileForm({this.projectModel,Key? key}) : super(key: key);
@@ -133,9 +133,9 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: widget.projectModel!.startDate!,
+                                        firstDate: widget.projectModel!.startDate!,
+                                        lastDate: widget.projectModel!.endDate!)
                                         .then((value) {
                                       setState(() {
                                         _startDate = value;
@@ -172,9 +172,9 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: _startDate!,
+                                        firstDate: _startDate!,
+                                        lastDate: widget.projectModel!.endDate!)
                                         .then((value) {
                                       setState(() {
                                         _endDate = value;
@@ -221,11 +221,11 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                           prefixStyle: TextStyle(color: Colors.grey),
                           fillColor: Theme.of(context).scaffoldBackgroundColor),
                       value: _statusValue,
-                      items: <Status>[Status.in_progress, Status.onHold, Status.done]
-                          .map<DropdownMenuItem<Enum>>((Enum value) {
-                        return DropdownMenuItem<Enum>(
+                      items: Status.values
+                          .map<DropdownMenuItem<Enum>>((Status value) {
+                        return DropdownMenuItem<Status>(
                           value: value,
-                          child: Text(value.toString()),
+                          child: Text(value.toString().split("Status.").last),
                         );
                       }).toList(),
                       onChanged: (value) {

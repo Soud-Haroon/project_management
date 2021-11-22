@@ -7,14 +7,16 @@ import '../../../const_colors.dart';
 
 class TotalTaskCard extends StatefulWidget {
   // int myIndex;
-  ProjectDetailModel? taskModel;
+  ProjectDetailModel? projectDetailModel;
   int? index;
+  int? builderIndex;
 
   TotalTaskCard({
     Key? key,
     // required this.myIndex,
-    this.taskModel,
+    this.projectDetailModel,
     this.index,
+    this.builderIndex,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class TotalTaskCard extends StatefulWidget {
 class _TotalTaskCardState extends State<TotalTaskCard> {
   @override
   Widget build(BuildContext context) {
+    var _taskVariable = widget.projectDetailModel!.milestone[widget.index!].taskList[widget.index!];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Container(
@@ -53,7 +56,7 @@ class _TotalTaskCardState extends State<TotalTaskCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${widget.taskModel!.milestone[widget.index!].taskList[widget.index!].taskTitle}',
+                        '${_taskVariable.taskTitle}',
                         style: TextStyle(
                           //color red
                           // fontWeight: FontWeight.bold,
@@ -90,7 +93,10 @@ class _TotalTaskCardState extends State<TotalTaskCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'Start Date: '),
                                 TextSpan(
-                                    // text: widget.taskModel.startDate,
+                                    text:
+                                        '${_taskVariable.startDate!.day}-'
+                                        '${_taskVariable.startDate!.month}-'
+                                        '${_taskVariable.startDate!.year}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),
@@ -101,7 +107,10 @@ class _TotalTaskCardState extends State<TotalTaskCard> {
                               children: <TextSpan>[
                                 TextSpan(text: 'End Date: '),
                                 TextSpan(
-                                    // text: widget.taskModel.endDate,
+                                    text:
+                                        '${_taskVariable.endDate!.day}-'
+                                        '${_taskVariable.endDate!.month}-'
+                                        '${_taskVariable.endDate!.year}',
                                     style: TextStyle(color: Colors.grey)),
                               ],
                             ),

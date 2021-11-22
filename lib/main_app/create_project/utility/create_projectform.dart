@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_declarations, duplicate_ignore, prefer_typing_uninitialized_variables, prefer_const_constructors, unnecessary_new, prefer_final_fields
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/main_project/main_project.dart';
@@ -52,6 +53,7 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                     TextFormField(
                       controller: _projectName,
                       textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
                       decoration: MyInputStyle('Project Name'),
                       // autovalidateMode: AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -189,9 +191,9 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: DateTime(2018),
+                                        firstDate: DateTime(2017),
+                                        lastDate: DateTime(2021))
                                         .then((value) {
                                       setState(() {
                                         _startDate = value;
@@ -228,9 +230,9 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                                   onPressed: () {
                                     showDatePicker(
                                             context: context,
-                                            initialDate: DateTime(2010),
-                                            firstDate: DateTime(1900),
-                                            lastDate: DateTime(2021))
+                                            initialDate: DateTime(2018),
+                                        firstDate: DateTime(2017),
+                                        lastDate: DateTime(2021))
                                         .then((value) {
                                       setState(() {
                                         _endDate = value;
@@ -247,6 +249,7 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                     TextFormField(
                       controller: _salePrice,
                       textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
                       decoration: MyInputStyle('Sale Price'),
                       // keyboardType: TextInputType.number,
                       // inputFormatters: [maskFormatter],
@@ -266,6 +269,7 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                     TextFormField(
                       controller: _downpayment,
                       textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
                       decoration: MyInputStyle('Down Payment'),
                       // keyboardType: TextInputType.number,
                       // inputFormatters: [maskFormatter],
@@ -325,6 +329,7 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                     TextFormField(
                       controller: _instalmentAmount,
                       textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
                       decoration: MyInputStyle('Installment Amount'),
                       // autovalidateMode: AutovalidateMode.onUserInteraction,
                       // validator: (value) {
@@ -365,8 +370,8 @@ class _MyCreateProjectFormState extends State<MyCreateProjectForm> {
                               onPressed: () {
                                 showDatePicker(
                                         context: context,
-                                        initialDate: DateTime(2010),
-                                        firstDate: DateTime(1900),
+                                        initialDate: DateTime(2018),
+                                        firstDate: DateTime(2017),
                                         lastDate: DateTime(2021))
                                     .then((value) {
                                   setState(() {

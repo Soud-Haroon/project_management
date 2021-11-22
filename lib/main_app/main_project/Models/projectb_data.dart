@@ -70,8 +70,8 @@ class MileDataModel {
 
 class TaskModel {
   String? taskTitle;
-  String? startDate;
-  String? endDate;
+  DateTime? startDate;
+  DateTime? endDate;
 
   TaskModel({
     this.taskTitle,
@@ -87,7 +87,7 @@ List<ProjectDetailModel> projectData = [
     companyName: 'Apex Legends',
     area: '4500',
     salePrice: '45',
-    startDate: DateTime.now(),
+    startDate: DateTime.parse("2020-01-01"),
     endDate: DateTime.now(),
     dueDate: DateTime.now(),
     type: 'Software',
