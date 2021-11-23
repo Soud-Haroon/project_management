@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/main_project/Models/project_data.dart';
 
 class AboutProject extends StatelessWidget {
   AboutProject({required this.aboutProjectData,Key? key}) : super(key: key);

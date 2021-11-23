@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/create_milestone/create_mileform.dart';
 import 'package:project_management/main_app/main_Instalment/main_Instalments.dart';
-import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/main_project/Models/project_data.dart';
 import 'package:project_management/main_app/milestones/about_milestone.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
 import 'package:project_management/utility/const_colors.dart';

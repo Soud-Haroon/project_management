@@ -7,7 +7,7 @@ import 'package:project_management/main_app/create_project/create_projectform.da
 import 'package:project_management/main_app/main_project/utility/project_tab_details.dart';
 import 'package:project_management/utility/const_colors.dart';
 
-import 'Models/projectb_data.dart';
+import 'Models/project_data.dart';
 
 class MainProjectPage extends StatefulWidget {
   const MainProjectPage({Key? key}) : super(key: key);

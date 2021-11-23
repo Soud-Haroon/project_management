@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/main_project/Models/project_data.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
 import 'package:project_management/utility/text_field_styling.dart';
 
-enum _Gender { male, female }
-enum _Status {inprogress , onHold , done}
+enum Status {inprogress , onHold , done}
 
 class MyCreateTaskForm extends StatefulWidget {
-  MyCreateTaskForm({this.projectModel,this.index ,Key? key}) : super(key: key);
+  MyCreateTaskForm({this.projectModel,this.index,this.edit ,Key? key}) : super(key: key);
   ProjectDetailModel? projectModel;
   int? index;
+  bool? edit;
   @override
   _MyCreateTaskFormState createState() => _MyCreateTaskFormState();
 }
@@ -33,10 +33,10 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
 //-------------------//
   XFile? image;
   String? imagePath;
-  List<String> _images = [
-    "",
-  ];
+  List<String> _images = [];
   bool? change;
+
+  var _taskStatusValue;
 
   Future pickImage(bool add) async {
     try {
@@ -66,11 +66,21 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
     imagePath = null;
   }
 
-  var _statusValue;
 
   @override
   void initState() {
     super.initState();
+    if (widget.edit == true) {
+      _taskName.text =
+          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskTitle.toString();
+      _description.text =
+          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskDescription.toString();
+      _taskStatusValue =
+          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskStatusValue;
+      _startDate = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].startDate;
+      _endDate = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].endDate;
+      _images = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskImageList!;
+    }
   }
 
   @override
@@ -225,17 +235,17 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                             ),
                             prefixStyle: TextStyle(color: Colors.grey),
                             fillColor: Theme.of(context).scaffoldBackgroundColor),
-                        value: _statusValue,
-                        items: <String>['IN PROGRESS', 'ON HOLD', 'DONE']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                        value: _taskStatusValue,
+                        items: Status.values
+                            .map<DropdownMenuItem<Enum>>((Status value) {
+                          return DropdownMenuItem<Status>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value.toString().split("Status.").last)
                           );
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            _statusValue = value;
+                            _taskStatusValue = value;
                           });
                         },
                       ),
@@ -256,12 +266,12 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                     ),
                     //-------------------------------------------------//
                     // if (imagePath == null) SizedBox(),
-                    if (_images.length > 1)
+                    if (_images.isNotEmpty)
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            for (int i = 1; i < _images.length; i++)
+                            for (int i = 0; i < _images.length; i++)
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 child: SizedBox(
@@ -280,7 +290,7 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                             SizedBox(
                                               width: 140,
                                               child: Text(
-                                                fileName!,
+                                                'image: ${i + 1}',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     overflow:
@@ -353,7 +363,9 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                       child: SizedBox(
                         height: 60,
                         child: ElevatedButton(
-                          child: const Text('Create Task',
+                          child: Text(widget.edit == true
+                              ? 'Update Task'
+                              : 'Create Task',
                               style:
                                   TextStyle(color: Colors.white)), //next button
                           style: ElevatedButton.styleFrom(
@@ -371,15 +383,30 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             } else {
-                              setState(() {
+                                if(widget.edit == true){
+                                  setState(() {
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskTitle = _taskName.text;
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskDescription=_description.text;
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskStatusValue = _taskStatusValue;
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].startDate = _startDate;
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].endDate = _endDate;
+                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskImageList = _images;
+                                  });
+                                  Navigator.of(context).pop();
+                                  }
+                                else{
+                                setState(() {
                                 widget.projectModel!.milestone[widget.index!].taskList.add(TaskModel(
-                                  taskTitle: _taskName.text,
-                                  startDate: _startDate,
-                                  endDate: _endDate,
+                                taskTitle: _taskName.text,
+                                taskDescription: _description.text,
+                                taskImageList: _images,
+                                startDate: _startDate,
+                                endDate: _endDate,
                                 ));
                                 MainTotalTasks.counter.value += 1;
                                 Navigator.of(context).pop();
-                              });
+                                });
+                                }
                             }
                           },
                         ),

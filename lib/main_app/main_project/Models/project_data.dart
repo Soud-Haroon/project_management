@@ -1,21 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 
-// List<MainProjectBCard> projectBData = [
-//   MainProjectBCard(
-//       header: _header,
-//       bodyContent: _bodyContent,
-//       startDate: _startDate,
-//       endDate: _endDate,
-//       milestones: _milestones),
-// ];
-
-// String _header = 'Tower';
-// String _bodyContent =
-//     'Hello guys, we have discussed about post-corona vacation plan and our decision is to go to Bali.';
-// String _startDate = '10-12-2021';
-// String _endDate = '10-12-2021';
-// int _milestones = 15;
-
 class ProjectDetailModel {
   String? projectName;
   String? ownerName;
@@ -72,11 +56,18 @@ class MileDataModel {
 
 class TaskModel {
   String? taskTitle;
+  String? taskDescription;
+  String backGroundImage = 'assets/content/imageback2.png';
+  List<String>? taskImageList;
+  var taskStatusValue;
   DateTime? startDate;
   DateTime? endDate;
 
   TaskModel({
     this.taskTitle,
+    this.taskDescription,
+    this.taskImageList,
+    this.taskStatusValue,
     this.startDate,
     this.endDate,
   });
@@ -87,8 +78,8 @@ List<ProjectDetailModel> projectData = [
     projectName: 'Starboy',
     ownerName: 'Soud',
     companyName: 'Apex Legends',
-    area: '4500',
-    salePrice: '45',
+    area: '2400',
+    salePrice: '50',
     startDate: DateTime.parse("2020-01-01"),
     endDate: DateTime.now(),
     dueDate: DateTime.now(),

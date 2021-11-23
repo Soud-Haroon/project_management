@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
+import 'package:project_management/main_app/main_project/Models/project_data.dart';
 import 'package:project_management/main_app/milestones/main_milestones.dart';
 import 'package:project_management/utility/text_field_styling.dart';
 
@@ -301,7 +301,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                             SizedBox(
                                               width: 140,
                                               child: Text(
-                                                'Image : $i',
+                                                'Image : ${i + 1}',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     overflow:
