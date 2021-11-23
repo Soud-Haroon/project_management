@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/create_milestone/mian_createmile.dart';
+import 'package:project_management/main_app/create_milestone/utility/create_mileform.dart';
 import 'package:project_management/main_app/main_Instalment/main_Instalments.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/main_project/utility/milestone_project.dart';
@@ -53,7 +54,7 @@ class _MainMilestonesState extends State<MainMilestones> {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) =>
-                    MainCreateMilestones(model: widget.mileProjectData, edit: false,)));
+                    MyCreateMileForm(projectModel: widget.mileProjectData,edit: false,)));
           },
           child: Icon(
             Icons.add,

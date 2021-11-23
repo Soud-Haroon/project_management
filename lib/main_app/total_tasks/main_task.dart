@@ -9,9 +9,9 @@ import 'package:project_management/main_app/total_tasks/task_about/task_about.da
 import 'utility/task_card.dart';
 
 class MainTotalTasks extends StatefulWidget {
-  MainTotalTasks({this.projectDetailModel,this.index ,Key? key}) : super(key: key);
+  MainTotalTasks({this.projectDetailModel,this.myIndex ,Key? key}) : super(key: key);
   ProjectDetailModel? projectDetailModel;
-  int? index;
+  int? myIndex;
   static ValueNotifier<int> counter = ValueNotifier<int>(projectData.length);
   @override
   _MainTotalTasksState createState() => _MainTotalTasksState();
@@ -25,16 +25,16 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
       appBar: buildMyAppBar(context, 'Total Tasks', true, true),
       body: ValueListenableBuilder(
         builder: (BuildContext context, int value, Widget? child) {
-        return widget.projectDetailModel!.milestone[widget.index!].taskList.isNotEmpty ?
+        return widget.projectDetailModel!.milestone[widget.myIndex!].taskList.isNotEmpty ?
         ListView.builder(
-            itemCount: widget.projectDetailModel!.milestone[widget.index!].taskList.length,
+            itemCount: widget.projectDetailModel!.milestone[widget.myIndex!].taskList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainTaskAbout()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainTaskAbout(projectDetailModel: widget.projectDetailModel,)));
                 },
                 child: TotalTaskCard(
-                  projectDetailModel: widget.projectDetailModel, index: widget.index,builderIndex: index,
+                  projectDetailModel: widget.projectDetailModel, index: widget.myIndex,builderIndex: index,
                 ),
               );
             }) :
@@ -48,7 +48,7 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => MainCreateTask(
-                    projectDetailModel: widget.projectDetailModel, index: widget.index)));
+                    projectDetailModel: widget.projectDetailModel, index: widget.myIndex)));
           },
           child: Icon(
             Icons.add,

@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'dart:ui';
 import 'dart:math' as math;
-
 import '../../../const_colors.dart';
 
-
 class MainTaskAbout extends StatelessWidget {
-  const MainTaskAbout({Key? key}) : super(key: key);
+  MainTaskAbout({Key? key, this.projectDetailModel, this.myIndex}) : super(key: key);
+  ProjectDetailModel? projectDetailModel;
+  int? myIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +17,14 @@ class MainTaskAbout extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context);
-        },icon: Icon(Icons.arrow_back_ios_new, color: Colors.white)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios_new, color: Colors.white)),
         actions: [
           IconButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               icon: Icon(Icons.edit_outlined, color: Colors.white))
         ],
       ),
@@ -50,7 +51,7 @@ class MainTaskAbout extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text('Appartment no 01',
                         style:
-                        TextStyle(fontSize: 22, color: Color(0xff464646))),
+                            TextStyle(fontSize: 22, color: Color(0xff464646))),
                   ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,7 +127,7 @@ class MainTaskAbout extends StatelessWidget {
                       ),
                       child: Center(
                           child:
-                          Text('2', style: TextStyle(color: Colors.white))),
+                              Text('2', style: TextStyle(color: Colors.white))),
                     ),
                   ]),
                   SizedBox(height: 20),

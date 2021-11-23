@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/create_milestone/mian_createmile.dart';
 import 'package:project_management/main_app/create_milestone/utility/create_mileform.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
@@ -45,7 +44,7 @@ class Milestone_of_Project extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MainCreateMilestones(model: milestoneData,myIndex: myIndex,edit: true)));
+                          builder: (context) => MyCreateMileForm(projectModel: milestoneData,myIndex: myIndex,edit: true)));
                     },
                     icon: Icon(Icons.edit_outlined, color: kPrimaryOrange),
                   ),
@@ -84,7 +83,7 @@ class Milestone_of_Project extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => MainTotalTasks(
                                     projectDetailModel: milestoneData,
-                                    index: myIndex)));
+                                    myIndex: myIndex)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(6.0),
