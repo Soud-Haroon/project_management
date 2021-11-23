@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'dart:ui';
 import 'dart:math' as math;
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 
 class MainTaskAbout extends StatelessWidget {
   MainTaskAbout({Key? key, this.projectDetailModel, this.myIndex}) : super(key: key);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math' as math;
 
-import '../../const_colors.dart';
+import '../../utility/const_colors.dart';
 
 class MainHome extends StatelessWidget {
   const MainHome({Key? key}) : super(key: key);

@@ -3,10 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/main_Instalment/main_Instalments.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
-import 'package:project_management/main_app/main_project/utility/main_projectb_card.dart';
 import 'package:project_management/main_app/milestones/main_milestones.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 import 'about_project.dart';
 
 class MainProjectDetails extends StatefulWidget {
@@ -35,7 +34,7 @@ class _MainProjectDetailsState extends State<MainProjectDetails> {
             color: MediaQuery.of(context).platformBrightness == Brightness.light
                 ? kContentColorLightTheme
                 : Colors.grey,
-            onPressed: () { Navigator.of(context).pop(); MainProjectBCard.counter.value+=1;},
+            onPressed: () { Navigator.of(context).pop();},
           ),
           title: Text(
             widget.myProjectData!.projectName.toString(),

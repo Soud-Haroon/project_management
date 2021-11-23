@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/create_milestone/utility/my_miletextstylefield.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/milestones/main_milestones.dart';
+import 'package:project_management/utility/text_field_styling.dart';
 
 enum Gender { male, female }
 enum Status { inprogress, onHold, done }

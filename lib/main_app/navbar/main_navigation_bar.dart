@@ -6,7 +6,7 @@ import 'package:project_management/main_app/dashboard/main_dashboard.dart';
 import 'package:project_management/main_app/main_project/main_project.dart';
 import 'package:project_management/main_app/main_setting/main_setting.dart';
 
-import '../../const_colors.dart';
+import '../../utility/const_colors.dart';
 
 class MainNavBar extends StatefulWidget {
   const MainNavBar({ Key? key }) : super(key: key);

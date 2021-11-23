@@ -1,11 +1,8 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project_management/main_app/appbar/appbar.dart';
-
-import '../../const_colors.dart';
+import '../../utility/const_colors.dart';
 import 'models/instalment_card_data.dart';
-import 'utility/instalment_card.dart';
 
 class MainInstalment extends StatefulWidget {
   const MainInstalment({Key? key}) : super(key: key);
@@ -35,7 +32,10 @@ class _MainInstalmentState extends State<MainInstalment> {
       body: Column(
         children: [
           const SizedBox(height: 10),
-          TotalHeader(totalSum: totalSum, totalRemaining: totalRemaining),
+          totalHeaderBar(
+              context: context,
+              totalSum: totalSum,
+              totalRemaining: totalRemaining),
           const SizedBox(height: 5),
           // MainInstalmentCard(myIndex: 1, startDate: '01-02-2020', dueDateFine: 5,instalment: 40,)
           Flexible(
@@ -45,7 +45,8 @@ class _MainInstalmentState extends State<MainInstalment> {
                 itemCount: InstalmentCardData.length,
                 itemBuilder: (context, index) {
                   // totalSum = InstalmentCardData[index].instalment! + totalSum;
-                  return MainInstalmentCard(
+                  return projectCard(
+                    context: context,
                     myModel: InstalmentCardData[index],
                     myIndex: index + 1,
                   );
@@ -55,20 +56,142 @@ class _MainInstalmentState extends State<MainInstalment> {
       ),
     );
   }
-}
 
-class TotalHeader extends StatelessWidget {
-  const TotalHeader({
-    Key? key,
-    required this.totalSum,
-    required this.totalRemaining,
-  }) : super(key: key);
+  Widget projectCard(
+      {required BuildContext context,
+      required MyCurrentIndex myModel,
+      required int myIndex}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      child: Container(
+        height: 100,
+        padding: EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xffFF66B8),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 67,
+              width: 5,
+            ),
+            SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: myIndex.toString(),
+                                style: TextStyle(fontSize: 16)),
+                            TextSpan(
+                                text: ' - instalment',
+                                style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Row(children: [
+                          RichText(
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: String.fromCharCodes(Runes('\u0024')),
+                                    style: TextStyle(
+                                        color: Color(0xff7E7F81),
+                                        fontSize: 16)),
+                                TextSpan(
+                                    text: myModel.instalment.toString(),
+                                    style: TextStyle(
+                                        color: Color(0xff7E7F81),
+                                        fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 15),
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Color(0xffA9BACC),
+                            child: ClipRect(
+                              child: Icon(Icons.done,
+                                  color: Colors.white, size: 20),
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ],
+                  ),
+                  // SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10, right: 25),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Due Date: ',
+                                    style: TextStyle(
+                                        color: Color(0xffA880E3),
+                                        fontSize: 12)),
+                                TextSpan(
+                                    text: myModel.startDate,
+                                    style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'After Due Date: ',
+                                    style: TextStyle(
+                                        color: Color(0xffFBBC00),
+                                        fontSize: 12)),
+                                TextSpan(
+                                    text: String.fromCharCodes(Runes('\u0024')),
+                                    style: TextStyle(fontSize: 12)),
+                                TextSpan(
+                                    text: myModel.dueDateFine.toString(),
+                                    style: TextStyle(fontSize: 12)),
+                                TextSpan(
+                                    text: ' + due amount',
+                                    style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                          ),
+                        ]),
+                  ),
+                  // SizedBox(height: 30),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-  final int totalSum;
-  final int totalRemaining;
-
-  @override
-  Widget build(BuildContext context) {
+//====================================================================//
+  Widget totalHeaderBar(
+      {required BuildContext context, int? totalSum, int? totalRemaining}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(

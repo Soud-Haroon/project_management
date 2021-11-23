@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_escapes, sized_box_for_whitespace
 import 'package:flutter/material.dart';
-import 'package:project_management/main_app/navbar/main_navigation_bar.dart';
-
 import 'forget_password/forget.dart';
 
 //use welcome screen to run app

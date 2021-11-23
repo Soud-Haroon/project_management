@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 
 class TotalTaskCard extends StatefulWidget {
   // int myIndex;

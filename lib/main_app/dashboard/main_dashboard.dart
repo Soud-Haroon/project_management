@@ -3,17 +3,17 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/create_activity/main_activity.dart';
-import 'package:project_management/main_app/create_milestone/mian_createmile.dart';
-import 'package:project_management/main_app/create_milestone/utility/create_mileform.dart';
-import 'package:project_management/main_app/create_project/main_create.dart';
-
 import 'model/activite_card_data_list.dart';
 import 'utility/dashproject_card.dart';
 
-class MainDashBoard extends StatelessWidget {
+class MainDashBoard extends StatefulWidget {
   const MainDashBoard({Key? key}) : super(key: key);
 
+  @override
+  State<MainDashBoard> createState() => _MainDashBoardState();
+}
+
+class _MainDashBoardState extends State<MainDashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,9 +149,9 @@ class MainDashBoard extends StatelessWidget {
                       SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const MainCreateProject()));
+                          // Navigator.pop(context);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const MainCreateProject()));
                         },
                         child: Text('Create Project',
                             style: TextStyle(
@@ -172,10 +172,10 @@ class MainDashBoard extends StatelessWidget {
                       SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  MyCreateMileForm()));
+                          // Navigator.pop(context);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         MyCreateMileForm()));
                         },
                         child: Text('Create Milestones',
                             style: TextStyle(
@@ -196,10 +196,10 @@ class MainDashBoard extends StatelessWidget {
                       SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const MainCreateActivity()));
+                          // Navigator.pop(context);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         const MainCreateActivity()));
                         },
                         child: Text('Create Activity',
                             style: TextStyle(
@@ -215,6 +215,10 @@ class MainDashBoard extends StatelessWidget {
       },
     );
   }
+
+
+
+  
 }
 
 String _header = 'Tower';

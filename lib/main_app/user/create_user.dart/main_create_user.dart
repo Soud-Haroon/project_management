@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
 String firstname = 'Your name';

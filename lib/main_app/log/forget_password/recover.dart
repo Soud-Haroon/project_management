@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 import 'reset.dart';
 
 //use welcome screen to run app

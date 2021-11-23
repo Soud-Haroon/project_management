@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, must_be_immutable, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:project_management/main_app/dashboard/model/blocks_card_datalist.dart';
-
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 
 class MainDashBoardCard extends StatefulWidget {
   String header;
@@ -155,19 +153,7 @@ class _MainDashBoardCardState extends State<MainDashBoardCard> {
                 ),
               ]),
               //==============================================================//
-              if (selected != false)
-                // MainBloackCard(),
-                SizedBox(
-                  height: 193,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: blockCardData.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: blockCardData[index],
-                    ),
-                    ),
-                ),
+              
             ],
           ),
         ),
@@ -175,6 +161,3 @@ class _MainDashBoardCardState extends State<MainDashBoardCard> {
     );
   }
 }
-
-//===============================================================//
-

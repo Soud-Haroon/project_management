@@ -4,11 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
-import 'package:project_management/main_app/create_milestone/utility/create_mileform.dart';
+import 'package:project_management/main_app/create_milestone/create_mileform.dart';
 import 'package:project_management/main_app/main_project/Models/projectb_data.dart';
 import 'package:project_management/main_app/total_tasks/main_task.dart';
 import 'dart:math' as math;
-import '../../../const_colors.dart';
+import '../../utility/const_colors.dart';
 
 class Milestone_of_Project extends StatelessWidget {
   Milestone_of_Project({this.milestoneData, this.myIndex, Key? key})

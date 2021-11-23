@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../const_colors.dart';
+import '../../utility/const_colors.dart';
 
 AppBar buildMyAppBar(BuildContext context, String name, bool bellicon , bool backicon) {
   

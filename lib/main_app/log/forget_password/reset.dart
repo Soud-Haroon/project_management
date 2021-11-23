@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 import 'package:flutter/material.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 
 //use welcome screen to run app
 class MainResetPassword extends StatelessWidget {

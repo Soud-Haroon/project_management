@@ -1,11 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
 import 'package:project_management/main_app/status/main_status.dart';
 import 'package:project_management/main_app/status/model/list_of_status.dart';
+import 'package:project_management/utility/text_field_styling.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 
 class MainCreateStatus extends StatefulWidget {
   const MainCreateStatus({Key? key}) : super(key: key);
@@ -17,30 +18,15 @@ class MainCreateStatus extends StatefulWidget {
 class _MainCreateStatusState extends State<MainCreateStatus> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController statusName = TextEditingController();
+  var _dropdownValue;
+  bool active = false;
+  bool inactive = false;
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xffF6F0EA),
       appBar: buildMyAppBar(context, 'Create Status', false, true),
-      body: CreateStatus(),
-    );
-  }
-}
-
-class CreateStatus extends StatefulWidget {
-  const CreateStatus({Key? key}) : super(key: key);
-
-  @override
-  State<CreateStatus> createState() => _CreateStatusState();
-}
-
-class _CreateStatusState extends State<CreateStatus> {
-  TextEditingController statusName = TextEditingController();
-  var _dropdownValue;
-  bool active = false;
-  bool inactive = false;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
+      body: Padding(
         padding: const EdgeInsets.only(top: 100, left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,27 +202,8 @@ class _CreateStatusState extends State<CreateStatus> {
               ),
             ),
           ],
-        ));
+        ),),
+    );
   }
 }
-//==========================================================================//
 
-InputDecoration buildMyInputDecoration(BuildContext context, String hint) {
-  return InputDecoration(
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
-      borderSide: BorderSide(color: Colors.transparent, width: 0),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
-      borderSide: BorderSide(color: Colors.transparent, width: 0),
-    ),
-
-    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    filled: true,
-    fillColor: Colors.white,
-    labelText: hint,
-    labelStyle: const TextStyle(fontSize: 12),
-    // hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-  );
-}

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables, unnecessary_new
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_constructors_in_immutables, unnecessary_new, prefer_typing_uninitialized_variables
 
 import 'dart:io';
 
@@ -8,8 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_management/main_app/appbar/appbar.dart';
 import 'package:project_management/shareprefernce/main_share.dart';
+import 'package:project_management/utility/text_field_styling.dart';
 
-import '../../../const_colors.dart';
+import '../../../utility/const_colors.dart';
 import 'main_portfolio.dart';
 import 'services_chip.dart';
 
@@ -28,6 +29,41 @@ class MainEditProfileForm extends StatefulWidget {
 
 class _MainEditProfileFormState extends State<MainEditProfileForm> {
   var dropdownValue;
+
+  final ImagePicker _picker = ImagePicker();
+  XFile? image;
+  XFile? changeImage;
+  String? imagePath;
+  String? fileName;
+  Future pickImage() async {
+    try {
+      final image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      setState(() {
+        imagePath = image.path;
+        // this.image = imageTemp;
+        // saveImage(this.image);
+      });
+      File file = new File(imagePath!);
+      fileName = file.path.split('/').last;
+      saveImage('SaveImage', image.path);
+    } on PlatformException catch (e) {
+      // ignore: avoid_print
+      print('Access Rejected: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadImage('SaveImage').then((value) {
+      setState(() {
+        imagePath = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +73,7 @@ class _MainEditProfileFormState extends State<MainEditProfileForm> {
         padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
         child: SingleChildScrollView(
           child: Column(children: [
-            ProfilePic(),
+            editProfilePicture(context: context, pickImage: pickImage,imagePath: imagePath),
             //--------------------------------------------------//
             TextFormField(
               textInputAction: TextInputAction.next,
@@ -109,7 +145,8 @@ class _MainEditProfileFormState extends State<MainEditProfileForm> {
             // const SizedBox(height: 20),
             //-------------------------------------------------------//
             SizedBox(height: 10),
-            PortfolioCard(
+            editPortFolio(
+              context: context,
               headTitle: 'Portfolio',
               press: () {
                 Navigator.push(
@@ -154,148 +191,56 @@ class _MainEditProfileFormState extends State<MainEditProfileForm> {
       ),
     );
   }
-}
-//=====================================================================//
-
-InputDecoration buildMyInputDecoration(BuildContext context, String hint) {
-  return InputDecoration(
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
-      borderSide: BorderSide(color: Colors.transparent, width: 0),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(6),
-      borderSide: BorderSide(color: Colors.transparent, width: 0),
-    ),
-    disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(color: Colors.transparent, width: 0),
-    ),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    filled: true,
-    fillColor: Colors.white,
-    labelText: hint,
-    labelStyle: const TextStyle(fontSize: 12),
-    // enabled: false,
-    // hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-  );
-}
-
-//--------------------------------------------------------------//
-
-class ProfilePic extends StatefulWidget {
-  ProfilePic({Key? key}) : super(key: key);
-
-  @override
-  State<ProfilePic> createState() => _ProfilePicState();
-}
-
-class _ProfilePicState extends State<ProfilePic> {
-  final ImagePicker _picker = ImagePicker();
-  XFile? image;
-  XFile? changeImage;
-  String? imagePath;
-  String? fileName;
-  Future pickImage() async {
-    try {
-      final image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-
-      setState(() {
-        imagePath = image.path;
-        // this.image = imageTemp;
-        // saveImage(this.image);
-      });
-      File file = new File(imagePath!);
-      fileName = file.path.split('/').last;
-      saveImage('SaveImage',image.path);
-    } on PlatformException catch (e) {
-      // ignore: avoid_print
-      print('Access Rejected: $e');
-    }
-  }
-  @override
-  void initState() {
-    super.initState();
-    loadImage('SaveImage').then((value) {
-      setState(() {
-        imagePath = value;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  //=================editProfile=========================//
+    Widget editProfilePicture({required BuildContext context, required Future<dynamic> Function() pickImage,String? imagePath}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-      child: Column(children: [
-        SizedBox(width: 10),
-        GestureDetector(
-          onTap: () {
-            pickImage();
-          },
-          child: Stack(
-            children: [
-              CircleAvatar(
+      child: GestureDetector(
+        onTap: () {
+          pickImage();
+        },
+        child: Stack(
+          children: [
+            CircleAvatar(
                 radius: (50),
                 backgroundColor: Colors.transparent,
-                child: 
-                imagePath != null ?
-                CircleAvatar(
-                          radius: 50,
-                          child: ClipRRect(
-                            clipBehavior: Clip.antiAlias,
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image(
-                              image: FileImage(File(imagePath!)),
-                              height: 114,
-                              width: 115,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
-                :ClipRRect(
-                  clipBehavior: Clip.antiAlias,
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset("assets/persons/user.png"),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 15,
-                child: ClipRRect(
+                child: CircleAvatar(
+                  radius: 50,
+                  child: ClipRRect(
+                    clipBehavior: Clip.antiAlias,
                     borderRadius: BorderRadius.circular(100),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        color: kPrimaryOrange,
-                        child: Icon(
-                          Icons.edit_outlined,
-                          size: 12,
-                          color: Colors.white,
-                        ))),
-              ),
-            ],
-          ),
+                    child: imagePath != null
+                        ? Image(
+                            image: FileImage(File(imagePath)),
+                            height: 114,
+                            width: 115,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset("assets/persons/user.png"),
+                  ),
+                )),
+            Positioned(
+              bottom: 0,
+              right: 15,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      color: kPrimaryOrange,
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 12,
+                        color: Colors.white,
+                      ))),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
-}
-
-//-----------------------------------------------------------------
-class PortfolioCard extends StatelessWidget {
-  //reused card
-  String? headTitle;
-  final VoidCallback? press;
-
-  PortfolioCard({
-    Key? key,
-    this.headTitle,
-    this.press,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
+  //====================editportfolio==================//
+  Widget editPortFolio({required BuildContext context,VoidCallback? press,String? headTitle}) {
     return InkWell(
       onTap: press,
       borderRadius: BorderRadius.circular(10),
@@ -314,7 +259,7 @@ class PortfolioCard extends StatelessWidget {
             children: [
               //=========================================//
               Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Text('$headTitle',
+                Text(headTitle!,
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -336,4 +281,8 @@ class PortfolioCard extends StatelessWidget {
       ),
     );
   }
+
+
 }
+//--------------------------------------------------------------//
+
