@@ -9,6 +9,7 @@ class ProjectDetailModel {
   String? downpayment;
   String? installment;
   String? installmentAmount;
+  var statusValue;
   DateTime? startDate;
   DateTime? endDate;
   DateTime? dueDate;
@@ -26,6 +27,7 @@ class ProjectDetailModel {
     this.endDate,
     this.dueDate,
     this.description,
+    this.statusValue,
     this.type,
     this.downpayment,
     this.installment,
@@ -86,6 +88,41 @@ List<ProjectDetailModel> projectData = [
     type: 'Software',
     downpayment: '120',
     installment: '7',
+    statusValue: 'Status.inprogress',
+    installmentAmount: '240',
+    description: des,
+    // milestone: mileData,
+  ),
+  ProjectDetailModel(
+    projectName: 'Starboy',
+    ownerName: 'Soud',
+    companyName: 'Apex Legends',
+    area: '2400',
+    salePrice: '50',
+    startDate: DateTime.parse("2020-01-01"),
+    endDate: DateTime.now(),
+    dueDate: DateTime.now(),
+    type: 'Software',
+    downpayment: '120',
+    installment: '7',
+    statusValue: 'Status.done',
+    installmentAmount: '240',
+    description: des,
+    // milestone: mileData,
+  ),
+  ProjectDetailModel(
+    projectName: 'Starboy',
+    ownerName: 'Soud',
+    companyName: 'Apex Legends',
+    area: '2400',
+    salePrice: '50',
+    startDate: DateTime.parse("2020-01-01"),
+    endDate: DateTime.now(),
+    dueDate: DateTime.now(),
+    type: 'Software',
+    downpayment: '120',
+    installment: '7',
+    statusValue: 'Status.onhold',
     installmentAmount: '240',
     description: des,
     // milestone: mileData,

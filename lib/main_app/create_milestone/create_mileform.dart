@@ -38,9 +38,9 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
   XFile? image;
   String? imagePath;
   List<String> _images = [];
-  bool? change;
+  // bool? change;
 
-  Future pickImage(bool add) async {
+  Future pickImage(bool change,int? i) async {
     try {
       final image = await _picker.pickImage(source: ImageSource.gallery);
       if (image == null) return;
@@ -49,6 +49,8 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
         imagePath = image.path;
         if (change != true) {
           _images.add(image.path);
+        } else {
+          _images[i!] = image.path;
         }
 
         // this.image = imageTemp;
@@ -92,11 +94,16 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       resizeToAvoidBottomInset: false,
-      appBar: buildMyAppBar(context, widget.edit == true ? 'Update Milestones': 'Create Milestones', false, true),
+      resizeToAvoidBottomInset: false,
+      appBar: buildMyAppBar(
+          context,
+          widget.edit == true ? 'Update Milestones' : 'Create Milestones',
+          false,
+          true),
       backgroundColor: Color(0xffE5E5E5),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+        padding:
+            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 1,
           child: Form(
@@ -155,10 +162,10 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                     onPressed: () {
                                       showDatePicker(
                                               context: context,
-                                              initialDate:
-                                                  widget.projectModel!.startDate!,
-                                              firstDate:
-                                                  widget.projectModel!.startDate!,
+                                              initialDate: widget
+                                                  .projectModel!.startDate!,
+                                              firstDate: widget
+                                                  .projectModel!.startDate!,
                                               lastDate:
                                                   widget.projectModel!.endDate!)
                                           .then((value) {
@@ -213,7 +220,7 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                         ]),
                     const SizedBox(height: 10),
                     //-------------------------------------------------//
-    
+
                     TextFormField(
                       controller: _description,
                       maxLines: 5,
@@ -240,12 +247,14 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                       child: DropdownButtonFormField(
                         decoration: InputDecoration(
                             labelText: "Status",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 20),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Color(0XFFC8C8C8)),
                             ),
                             prefixStyle: TextStyle(color: Colors.grey),
-                            fillColor: Theme.of(context).scaffoldBackgroundColor),
+                            fillColor:
+                                Theme.of(context).scaffoldBackgroundColor),
                         value: _dropDownStatusValue,
                         items: Status.values
                             .map<DropdownMenuItem<Enum>>((Status value) {
@@ -284,7 +293,8 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                           children: [
                             for (int i = 0; i < _images.length; i++)
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: SizedBox(
                                   height: 70,
                                   child: Row(
@@ -320,25 +330,22 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.red,
-                                                        decoration: TextDecoration
-                                                            .underline),
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
                                                   )),
                                               TextButton(
                                                   onPressed: () {
-                                                    _picker.pickImage(
-                                                        source:
-                                                            ImageSource.gallery);
-                                                    setState(() {
-                                                      _images[i] = imagePath!;
-                                                    });
+                                                    pickImage(true, i);
                                                   },
                                                   child: Text(
                                                     'Change',
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.blue,
-                                                        decoration: TextDecoration
-                                                            .underline),
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
                                                   )),
                                             ]),
                                           ]),
@@ -354,14 +361,14 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.white),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                        side: BorderSide(
-                                            color: Colors.grey.shade400)))),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(
+                                        color: Colors.grey.shade400)))),
                         onPressed: () {
-                          pickImage(false);
+                          pickImage(false, null);
                         },
                         child: Text('Attach Image',
                             style: TextStyle(
@@ -398,17 +405,29 @@ class _MyCreateMileFormState extends State<MyCreateMileForm> {
                             } else {
                               if (widget.edit == true) {
                                 setState(() {
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .mileName = _milestonesName.text;
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .milDes = _description.text;
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .startDate = _startDate;
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .endDate = _endDate;
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .statusValue = _dropDownStatusValue;
-                                  widget.projectModel!.milestone[widget.myIndex!]
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.myIndex!]
                                       .imageList = _images;
                                 });
                                 Navigator.of(context).pop();

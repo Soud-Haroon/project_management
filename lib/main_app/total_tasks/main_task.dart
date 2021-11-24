@@ -104,12 +104,36 @@ class _MainTotalTasksState extends State<MainTotalTasks> {
                             height: 27,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              color: kInProgressColor,
+                              color: widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.inprogress'
+                                  ? kInProgressColor
+                                  : widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.onHold'
+                                  ? Colors.orange[300]
+                                  : widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.done'
+                                  ? Colors.green[200]
+                                  : null,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
-                              child: Text('IN PROGRESS',
+                              child: Text(widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.inprogress'
+                                  ? 'IN PROGRESS'
+                                  : widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.onHold'
+                                  ? 'ON HOLD'
+                                  : widget.projectDetailModel!.milestone[widget.myIndex!].taskList[widget.myIndex!].taskStatusValue
+                                  .toString() ==
+                                  'Status.done'
+                                  ? 'DONE'
+                                  : 'null',
                                   style: TextStyle(
                                       fontSize: 11, color: Colors.white)),
                             )),

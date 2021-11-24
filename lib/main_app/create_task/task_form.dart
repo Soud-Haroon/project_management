@@ -10,10 +10,11 @@ import 'package:project_management/main_app/main_project/Models/project_data.dar
 import 'package:project_management/main_app/total_tasks/main_task.dart';
 import 'package:project_management/utility/text_field_styling.dart';
 
-enum Status {inprogress , onHold , done}
+enum Status { inprogress, onHold, done }
 
 class MyCreateTaskForm extends StatefulWidget {
-  MyCreateTaskForm({this.projectModel,this.index,this.edit ,Key? key}) : super(key: key);
+  MyCreateTaskForm({this.projectModel, this.index, this.edit, Key? key})
+      : super(key: key);
   ProjectDetailModel? projectModel;
   int? index;
   bool? edit;
@@ -34,11 +35,10 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
   XFile? image;
   String? imagePath;
   List<String> _images = [];
-  bool? change;
 
   var _taskStatusValue;
 
-  Future pickImage(bool add) async {
+  Future pickImage(bool change, int? i) async {
     try {
       final image = await _picker.pickImage(source: ImageSource.gallery);
       if (image == null) return;
@@ -47,6 +47,8 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
         imagePath = image.path;
         if (change != true) {
           _images.add(image.path);
+        } else {
+          _images[i!] = image.path;
         }
 
         // this.image = imageTemp;
@@ -66,20 +68,24 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
     imagePath = null;
   }
 
-
   @override
   void initState() {
     super.initState();
     if (widget.edit == true) {
-      _taskName.text =
-          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskTitle.toString();
-      _description.text =
-          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskDescription.toString();
-      _taskStatusValue =
-          widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskStatusValue;
-      _startDate = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].startDate;
-      _endDate = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].endDate;
-      _images = widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskImageList!;
+      _taskName.text = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].taskTitle
+          .toString();
+      _description.text = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].taskDescription
+          .toString();
+      _taskStatusValue = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].taskStatusValue;
+      _startDate = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].startDate;
+      _endDate = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].endDate;
+      _images = widget.projectModel!.milestone[widget.index!]
+          .taskList[widget.index!].taskImageList!;
     }
   }
 
@@ -89,7 +95,8 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
       resizeToAvoidBottomInset: false,
       appBar: buildMyAppBar(context, 'Create Task', false, true),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+        padding:
+            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 1,
           child: Form(
@@ -148,9 +155,18 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                     onPressed: () {
                                       showDatePicker(
                                               context: context,
-                                              initialDate: widget.projectModel!.milestone[widget.index!].startDate!,
-                                          firstDate: widget.projectModel!.milestone[widget.index!].startDate!,
-                                          lastDate: widget.projectModel!.milestone[widget.index!].endDate!)
+                                              initialDate: widget
+                                                  .projectModel!
+                                                  .milestone[widget.index!]
+                                                  .startDate!,
+                                              firstDate: widget
+                                                  .projectModel!
+                                                  .milestone[widget.index!]
+                                                  .startDate!,
+                                              lastDate: widget
+                                                  .projectModel!
+                                                  .milestone[widget.index!]
+                                                  .endDate!)
                                           .then((value) {
                                         setState(() {
                                           _startDate = value;
@@ -188,8 +204,11 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                       showDatePicker(
                                               context: context,
                                               initialDate: _startDate!,
-                                          firstDate: _startDate!,
-                                          lastDate: widget.projectModel!.milestone[widget.index!].endDate!)
+                                              firstDate: _startDate!,
+                                              lastDate: widget
+                                                  .projectModel!
+                                                  .milestone[widget.index!]
+                                                  .endDate!)
                                           .then((value) {
                                         setState(() {
                                           _endDate = value;
@@ -202,7 +221,7 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                         ]),
                     const SizedBox(height: 10),
                     //-------------------------------------------------//
-    
+
                     TextFormField(
                       controller: _description,
                       maxLines: 5,
@@ -229,19 +248,21 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                       child: DropdownButtonFormField(
                         decoration: InputDecoration(
                             labelText: "Status",
-                            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 20),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Color(0XFFC8C8C8)),
                             ),
                             prefixStyle: TextStyle(color: Colors.grey),
-                            fillColor: Theme.of(context).scaffoldBackgroundColor),
+                            fillColor:
+                                Theme.of(context).scaffoldBackgroundColor),
                         value: _taskStatusValue,
                         items: Status.values
                             .map<DropdownMenuItem<Enum>>((Status value) {
                           return DropdownMenuItem<Status>(
-                            value: value,
-                            child: Text(value.toString().split("Status.").last)
-                          );
+                              value: value,
+                              child:
+                                  Text(value.toString().split("Status.").last));
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
@@ -273,7 +294,8 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                           children: [
                             for (int i = 0; i < _images.length; i++)
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: SizedBox(
                                   height: 70,
                                   child: Row(
@@ -309,25 +331,22 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.red,
-                                                        decoration: TextDecoration
-                                                            .underline),
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
                                                   )),
                                               TextButton(
                                                   onPressed: () {
-                                                    _picker.pickImage(
-                                                        source:
-                                                            ImageSource.gallery);
-                                                    setState(() {
-                                                      _images[i] = imagePath!;
-                                                    });
+                                                    pickImage(true, i);
                                                   },
                                                   child: Text(
                                                     'Change',
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.blue,
-                                                        decoration: TextDecoration
-                                                            .underline),
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
                                                   )),
                                             ]),
                                           ]),
@@ -343,14 +362,14 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.white),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                        side: BorderSide(
-                                            color: Colors.grey.shade400)))),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(
+                                        color: Colors.grey.shade400)))),
                         onPressed: () {
-                          pickImage(false);
+                          pickImage(false, null);
                         },
                         child: Text('Attach Image',
                             style: TextStyle(
@@ -363,9 +382,10 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                       child: SizedBox(
                         height: 60,
                         child: ElevatedButton(
-                          child: Text(widget.edit == true
-                              ? 'Update Task'
-                              : 'Create Task',
+                          child: Text(
+                              widget.edit == true
+                                  ? 'Update Task'
+                                  : 'Create Task',
                               style:
                                   TextStyle(color: Colors.white)), //next button
                           style: ElevatedButton.styleFrom(
@@ -383,30 +403,56 @@ class _MyCreateTaskFormState extends State<MyCreateTaskForm> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             } else {
-                                if(widget.edit == true){
-                                  setState(() {
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskTitle = _taskName.text;
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskDescription=_description.text;
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskStatusValue = _taskStatusValue;
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].startDate = _startDate;
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].endDate = _endDate;
-                                  widget.projectModel!.milestone[widget.index!].taskList[widget.index!].taskImageList = _images;
-                                  });
-                                  Navigator.of(context).pop();
-                                  }
-                                else{
+                              if (widget.edit == true) {
                                 setState(() {
-                                widget.projectModel!.milestone[widget.index!].taskList.add(TaskModel(
-                                taskTitle: _taskName.text,
-                                taskDescription: _description.text,
-                                taskImageList: _images,
-                                startDate: _startDate,
-                                endDate: _endDate,
-                                ));
-                                MainTotalTasks.counter.value += 1;
-                                Navigator.of(context).pop();
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .taskTitle = _taskName.text;
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .taskDescription = _description.text;
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .taskStatusValue = _taskStatusValue;
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .startDate = _startDate;
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .endDate = _endDate;
+                                  widget
+                                      .projectModel!
+                                      .milestone[widget.index!]
+                                      .taskList[widget.index!]
+                                      .taskImageList = _images;
                                 });
-                                }
+                                Navigator.of(context).pop();
+                              } else {
+                                setState(() {
+                                  widget.projectModel!.milestone[widget.index!]
+                                      .taskList
+                                      .add(TaskModel(
+                                    taskTitle: _taskName.text,
+                                    taskDescription: _description.text,
+                                    taskStatusValue: _taskStatusValue,
+                                    taskImageList: _images,
+                                    startDate: _startDate,
+                                    endDate: _endDate,
+                                  ));
+                                  MainTotalTasks.counter.value += 1;
+                                  Navigator.of(context).pop();
+                                });
+                              }
                             }
                           },
                         ),

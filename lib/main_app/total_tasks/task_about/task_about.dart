@@ -126,16 +126,15 @@ class MainTaskAbout extends StatelessWidget {
                             height: 27,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              color: projectDetailModel!.milestone[myIndex!].statusValue
+                              color: projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.inprogress'
                                   ? kInProgressColor
-                                  : projectDetailModel!.milestone[myIndex!].statusValue
+                                  : projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.onHold'
                                   ? Colors.orange[300]
-                                  : projectDetailModel!
-                                  .milestone[myIndex!].statusValue
+                                  : projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.done'
                                   ? Colors.green[200]
@@ -144,17 +143,15 @@ class MainTaskAbout extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
-                              child: Text(projectDetailModel!.milestone[myIndex!].statusValue
+                              child: Text(projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.inprogress'
                                   ? 'IN PROGRESS'
-                                  : projectDetailModel!
-                                  .milestone[myIndex!].statusValue
+                                  : projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.onHold'
                                   ? 'ON HOLD'
-                                  : projectDetailModel!.milestone[myIndex!]
-                                  .statusValue
+                                  : projectDetailModel!.milestone[myIndex!].taskList[myIndex!].taskStatusValue
                                   .toString() ==
                                   'Status.done'
                                   ? 'DONE'
