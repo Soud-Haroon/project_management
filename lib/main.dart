@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_management/utility/const_colors.dart';
 
@@ -24,10 +23,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.immersiveSticky,
-      // overlays: [SystemUiOverlay.bottom],
-    );
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.immersiveSticky,
+    //   // overlays: [SystemUiOverlay.bottom],
+    // );
     // SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       title: 'Flutter Demo',

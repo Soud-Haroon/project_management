@@ -16,10 +16,10 @@ class MainLogIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.immersiveSticky,
-      // overlays: [SystemUiOverlay.bottom],
-    );
+    // SystemChrome.setEnabledSystemUIMode(
+    //   SystemUiMode.immersiveSticky,
+    //   // overlays: [SystemUiOverlay.bottom],
+    // );
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -191,8 +191,9 @@ class MainLogIn extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => MainSignUp()));
-                          }, child: Text('New Here? Register')),
+                                builder: (context) => MainSignUp()));
+                          },
+                          child: Text('New Here? Register')),
                       //----------------------------//
                       SizedBox(
                           height: 50,
@@ -201,8 +202,9 @@ class MainLogIn extends StatelessWidget {
                               onPressed: () {
                                 // if (_email.text.isNotEmpty &&
                                 //     _password.text.isNotEmpty) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => MainNavBar()));
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => MainNavBar()));
                                 // }
                                 // if (_email.text.isEmpty ||
                                 //     _password.text.isEmpty) {

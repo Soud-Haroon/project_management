@@ -16,100 +16,103 @@ class MainDashBoard extends StatefulWidget {
 class _MainDashBoardState extends State<MainDashBoard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.transparent,
-      appBar: buildMyAppBar(context, 'DashBoard', false, false),
-      body: Stack(
-        children: [
-          //================================================//
-          Container(
-            height: MediaQuery.of(context).size.height * 0.50,
-            width: MediaQuery.of(context).size.width * 1,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/myback3.png'),
-                colorFilter: ColorFilter.mode(
-                    Color(0xfff6f3ea).withOpacity(0.4), BlendMode.dstATop),
-                fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.transparent,
+        appBar: buildMyAppBar(context, 'DashBoard', false, false),
+        body: Stack(
+          children: [
+            //================================================//
+            Container(
+              height: MediaQuery.of(context).size.height * 0.50,
+              width: MediaQuery.of(context).size.width * 1,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/myback3.png'),
+                  colorFilter: ColorFilter.mode(
+                      Color(0xfff6f3ea).withOpacity(0.4), BlendMode.dstATop),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          //==================================================//
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Take a look at what has been done so far',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff3C3C3C))),
-                ),
-                //======================================================//
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Project',
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Expaned All', style: TextStyle(fontSize: 12)),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: MainDashBoardCard(
-                    header: _header,
-                    bodyContent: _bodyContent,
-                    startDate: _startDate,
-                    endDate: _endDate,
-                    milestones: _milestones,
+            //==================================================//
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('Take a look at what has been done so far',
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff3C3C3C))),
                   ),
-                ),
-                //=========================================================//
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Activities',
-                      style: Theme.of(context).textTheme.headline6),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text('Expaned All', style: TextStyle(fontSize: 12)),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: SizedBox(
-                    height: 183,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: dashActCardData.length,
-                        itemBuilder: (context, index) =>
-                            dashActCardData[index]),
+                  //======================================================//
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('Project',
+                        style: Theme.of(context).textTheme.headline6),
                   ),
-                ),
-                // MainDashActivitesCard(number: 17, Needactivite: 'Completed',),
-                // Spacer(),
-              ],
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('Expaned All', style: TextStyle(fontSize: 12)),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: MainDashBoardCard(
+                      header: _header,
+                      bodyContent: _bodyContent,
+                      startDate: _startDate,
+                      endDate: _endDate,
+                      milestones: _milestones,
+                    ),
+                  ),
+                  //=========================================================//
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('Activities',
+                        style: Theme.of(context).textTheme.headline6),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('Expaned All', style: TextStyle(fontSize: 12)),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: SizedBox(
+                      height: 183,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: dashActCardData.length,
+                          itemBuilder: (context, index) =>
+                              dashActCardData[index]),
+                    ),
+                  ),
+                  // MainDashActivitesCard(number: 17, Needactivite: 'Completed',),
+                  // Spacer(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //     onPressed: () {
+        //       createDialogs(context);
+        //     },
+        //     child: Icon(
+        //       Icons.add,
+        //       color: Colors.white,
+        //     )),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //     onPressed: () {
-      //       createDialogs(context);
-      //     },
-      //     child: Icon(
-      //       Icons.add,
-      //       color: Colors.white,
-      //     )),
     );
   }
 

@@ -14,7 +14,7 @@ AppBar buildMyAppBar(BuildContext context, String name, bool bellicon , bool bac
       color: MediaQuery.of(context).platformBrightness == Brightness.light
           ? kContentColorLightTheme
           : Colors.grey,
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () => backicon == true ? Navigator.of(context).pop() : null,
     ),
     title: Text(
       name,
